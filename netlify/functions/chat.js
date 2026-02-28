@@ -5,17 +5,17 @@ exports.handler = async function(event, context) {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
         
+        // Verificamos si Netlify está leyendo la llave
         if (!apiKey) {
-            return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error Netlify: No encuentro la llave." }) };
+            return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error Netlify: No encuentro la llave GEMINI_API_KEY." }) };
         }
 
         const { prompt, historial } = JSON.parse(event.body);
         const mensajes = historial || [];
         mensajes.push({ role: "user", parts: [{ text: prompt }] });
 
-        // ===== LA SOLUCIÓN ESTÁ AQUÍ =====
-        // Actualizamos el modelo a "gemini-2.0-flash" que es la versión actual y activa de Google
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        // ===== PLAN A: Usando el modelo 1.5-flash-8b (Más ligero para el Free Tier) =====
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -26,13 +26,16 @@ exports.handler = async function(event, context) {
 
         const data = await response.json();
         
+        // Atrapamos si Google nos sigue bloqueando por la cuota
         if (data.error) {
             return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error de Google: " + data.error.message }) };
         }
 
+        // Si todo sale bien, enviamos la respuesta del bot
         return { statusCode: 200, body: JSON.stringify({ respuesta: data.candidates[0].content.parts[0].text }) };
 
     } catch (error) {
+        // Atrapamos cualquier otro error de programación
         return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error de código: " + error.message }) };
     }
 };
