@@ -5,27 +5,27 @@ exports.handler = async function(event, context) {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
         
-        // 1. Si Netlify no encuentra la llave, el bot lo dirá
         if (!apiKey) {
-            return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error Netlify: No encuentro la variable GEMINI_API_KEY." }) };
+            return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error Netlify: No encuentro la llave." }) };
         }
 
         const { prompt, historial } = JSON.parse(event.body);
         const mensajes = historial || [];
         mensajes.push({ role: "user", parts: [{ text: prompt }] });
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        // ===== LA SOLUCIÓN ESTÁ AQUÍ =====
+        // Actualizamos el modelo a "gemini-2.0-flash" que es la versión actual y activa de Google
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                systemInstruction: { parts: [{ text: "Eres el asistente oficial de ElCerveceroTV. Fanático de Sporting Cristal." }] },
+                systemInstruction: { parts: [{ text: "Eres el asistente de ElCerveceroTV. Creado por Arnold. Eres fanático de Sporting Cristal y respondes con mucha energía. Recomienda el navegador Brave o uBlock para evitar anuncios. Si preguntan por donaciones, diles Yape/Agora al 930 169 320." }] },
                 contents: mensajes
             })
         });
 
         const data = await response.json();
         
-        // 2. Si Google bloqueó la llave, el bot mostrará el mensaje de Google
         if (data.error) {
             return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error de Google: " + data.error.message }) };
         }
@@ -33,7 +33,6 @@ exports.handler = async function(event, context) {
         return { statusCode: 200, body: JSON.stringify({ respuesta: data.candidates[0].content.parts[0].text }) };
 
     } catch (error) {
-        // 3. Cualquier otro fallo interno
         return { statusCode: 200, body: JSON.stringify({ respuesta: "⚠️ Error de código: " + error.message }) };
     }
 };
