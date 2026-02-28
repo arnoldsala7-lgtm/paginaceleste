@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="ElCerveceroTV - La casa de la Raza Celeste.">
+    <meta name="referrer" content="no-referrer">
+    <title>⚽ ElCerveceroTV | Fuerza Cristal</title>
+    
+    <link rel="icon" href="mi_logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <i class="fa-solid fa-shield-halved logo-shield-icon"></i> 
+                ElCerveceroTV | Fuerza Cristal
+            </a>
+            <div class="live-badge"><div class="live-dot"></div> EN VIVO HD</div>
+        </div>
+    </header>
+
+    <main class="main-content container">
+        
+        <section class="top-video-section">
+            <div class="Match-title" id="mainMatchTitle">
+                <i class="fa-solid fa-tv"></i>
+                <span>LIGA 1 MAX EN VIVO: SPORTING CRISTAL</span>
+            </div>
+            
+            <div class="video-frame" id="video-container">
+                <div id="fake-poster" class="fake-poster">
+                    <img src="https://claroperupoc.vtexassets.com/arquivos/ids/1667923/liga-1-max.png" alt="L1 MAX">
+                    <div class="play-button"><i class="fa-solid fa-play"></i></div>
+                </div>
+                
+                <iframe id="live-iframe" src="" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="no-referrer" scrolling="no" style="display: none; width: 100%; height: 100%; border: none; background: #000;"></iframe>
+            </div>
+
+            <div style="background: rgba(255, 85, 0, 0.1); border: 1px solid #ff5500; padding: 15px; border-radius: 10px; margin-top: 15px; display: flex; gap: 15px; align-items: center;">
+                <i class="fa-solid fa-shield-halved" style="color: #ff5500; font-size: 2rem;"></i>
+                <div>
+                    <h4 style="margin: 0; color: #ff5500; font-family: 'Oswald', sans-serif; font-size: 1.2rem; text-transform: uppercase;">RECOMENDACIÓN</h4>
+                    <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #ccc;">Usa el navegador <b>Brave</b> o instala la extensión <b>uBlock Origin</b> para bloquear los anuncios externos automáticamente.</p>
+                </div>
+            </div>
+
+            <div class="action-bar" style="margin-top: 20px;">
+                <div class="viewers-count">
+                    <div class="live-dot-celeste"></div>
+                    <span style="color: var(--sc-white); margin-left: 5px;">Transmisión de la Raza Celeste</span>
+                </div>
+                <div class="share-section">
+                    <span>Compartir:</span>
+                    <button class="share-btn btn-wa" onclick="window.open('https://api.whatsapp.com/send?text=¡Alienta a Cristal en vivo por ElCerveceroTV!', '_blank')"><i class="fa-brands fa-whatsapp"></i></button>
+                    <button class="share-btn btn-fb" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=URL_DE_TU_WEB', '_blank')"><i class="fa-brands fa-facebook-f"></i></button>
+                    <button class="share-btn btn-tw" onclick="window.open('https://twitter.com/intent/tweet?text=¡Viendo a la Máquina Celeste por ElCerveceroTV!', '_blank')"><i class="fa-brands fa-x-twitter"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <div class="countdown-container" style="text-align: center; margin: 20px 0; background: rgba(0, 51, 102, 0.5); padding: 20px; border-radius: 15px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+            <h3 id="titulo-proximo" style="font-family: 'Oswald', sans-serif; color: var(--sc-celeste); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Calculando próximo partido...</h3>
+            <div id="countdown" style="display: flex; justify-content: center; gap: 20px; font-family: 'Oswald', sans-serif; font-size: 2.5rem; color: white; font-weight: 700;"></div>
+        </div>
+
+        <section class="bottom-info-section">
+            <div class="glass-panel" style="height: fit-content;">
+                <h3 class="panel-header"><i class="fa-solid fa-clipboard-list"></i> Alineaciones Celestes</h3>
+                <div class="widget-wrapper" style="margin-bottom: 0;">
+                    <iframe id="sofa-lineups-embed-15458724" class="iframe-lineups" src="https://widgets.sofascore.com/embed/lineups?id=15458724&widgetTheme=light" scrolling="no" style="width: 100%; height: 600px; border: none; border-radius: 10px; background: #fff;"></iframe>
+                </div>
+            </div>
+
+            <div class="sidebar-wrapper">
+                <div class="glass-panel" style="margin-bottom: 25px; height: fit-content;">
+                    <h3 class="panel-header" style="justify-content: center; font-size: 1.4rem;">
+                        <i class="fa-solid fa-hand-holding-heart"></i> Apoya al Cervecero
+                    </h3>
+                    <p class="donation-desc">Tu aliento es vital. Apóyanos para seguir llevando los partidos de Cristal a todo el mundo.</p>
+                    <div class="donations-grid">
+                        <div class="premium-card card-yape" onclick="copyText('930169320', 'Yape')">
+                            <div class="card-left">
+                                <div class="payment-img-box"><img src="yape.png" alt="Yape" class="payment-logo" onerror="this.src='mi_logo.png'"></div>
+                                <div class="card-details"><h4>Yape</h4><span class="card-number">930 169 320</span></div>
+                            </div>
+                            <div class="copy-action"><i class="fa-regular fa-copy"></i> Copiar</div>
+                        </div>
+                        <div class="premium-card card-agora" onclick="copyText('930169320', 'Agora')">
+                            <div class="card-left">
+                                <div class="payment-img-box"><img src="agorapay.png" alt="Agora" class="payment-logo" onerror="this.src='mi_logo.png'"></div>
+                                <div class="card-details"><h4>Agora</h4><span class="card-number">930 169 320</span></div>
+                            </div>
+                            <div class="copy-action"><i class="fa-regular fa-copy"></i> Copiar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="height: fit-content;">
+                    <h3 class="panel-header"><i class="fa-solid fa-calendar-days"></i> Próximos Partidos</h3>
+                    <div class="upcoming-list">
+                        <div class="upcoming-item">
+                            <div class="date-box"><span>28</span>FEB</div>
+                            <div class="match-info"><div class="league">Liga 1 Te Apuesto</div><div class="teams">S. Huancayo vs. S. Cristal</div></div>
+                        </div>
+                        <div class="upcoming-item">
+                            <div class="date-box"><span>02</span>MAR</div>
+                            <div class="match-info"><div class="league">Liga 1 Te Apuesto</div><div class="teams">S. Cristal vs. A. Atletico</div></div>
+                        </div>
+                    </div>
+                    
+                    <a href="agenda.html" class="action-btn" style="margin-top: 15px; width: 100%; justify-content: center; display: flex;">
+                        <i class="fa-solid fa-satellite-dish" style="margin-right: 8px;"></i> Ver Agenda de Canales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-logo">© 2026 ElCerveceroTV</div>
+        </div>
+    </footer>
+
+    <div id="premiumToast" class="toast-premium"><i id="toastIcon" class="fa-solid fa-circle-check toast-icon-success"></i><span id="toastMessage"></span></div>
+
+    <style>
+        #chatbot-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Oswald', sans-serif; }
+        #chat-window { display: none; width: 320px; height: 450px; background: #001224; border: 2px solid #5CBFEB; border-radius: 15px; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #chat-header { background: #5CBFEB; color: #001224; padding: 15px; font-weight: bold; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center; }
+        #chat-close { cursor: pointer; font-size: 1.2rem; }
+        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: rgba(0, 51, 102, 0.9); font-family: 'Montserrat', sans-serif;}
+        .msg { padding: 10px; border-radius: 10px; font-size: 0.85rem; max-width: 85%; line-height: 1.4; word-wrap: break-word; }
+        .msg-user { background: #5CBFEB; color: #001224; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 600;}
+        .msg-bot { background: #002244; color: white; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid rgba(92, 191, 235, 0.4); }
+        #chat-input-area { display: flex; padding: 10px; background: #001224; border-top: 1px solid #5CBFEB; }
+        #chat-input { flex: 1; padding: 10px; border: none; border-radius: 20px; background: #003366; color: white; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;}
+        #chat-input::placeholder { color: #888; }
+        #chat-send { background: #5CBFEB; color: #001224; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.1rem;}
+        #chat-bubble { width: 60px; height: 60px; background: #5CBFEB; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(92, 191, 235, 0.4); transition: transform 0.3s; }
+        #chat-bubble:hover { transform: scale(1.1); }
+        #chat-bubble i { font-size: 1.8rem; color: #001224; }
+        .escribiendo { font-style: italic; opacity: 0.7; }
+    </style>
+
+    <div id="chatbot-container">
+        <div id="chat-window">
+            <div id="chat-header">
+                <span>⚽ Asistente Cervecero</span>
+                <span id="chat-close"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <div id="chat-messages">
+                <div class="msg msg-bot">¡Hola! Soy el asistente oficial de ElCerveceroTV. ¿Buscas un partido o canal? ¡Fuerza Cristal! 🍺</div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+                <button id="chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div id="chat-bubble">
+            <i class="fa-solid fa-message"></i>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

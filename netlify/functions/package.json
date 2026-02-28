@@ -1,0 +1,9 @@
+{
+  "name": "elcervecerotv",
+  "version": "1.0.0",
+  "description": "Plataforma de streaming y chatbot de ElCerveceroTV",
+  "main": "index.html",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

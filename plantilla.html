@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="no-referrer">
+    <title>Plantel Sporting Cristal 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="javascript:history.back()" class="logo" style="cursor: pointer;">
+                <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 40px;">
+        <div class="plantilla-header">
+            <h2>La Raza Celeste</h2>
+            
+            <div class="filtros-posicion">
+                <button class="btn-filtro active" onclick="filtrarJugadores('TODOS', this)">Todos</button>
+                <button class="btn-filtro" onclick="filtrarJugadores('ARQ', this)">Arqueros</button>
+                <button class="btn-filtro" onclick="filtrarJugadores('DFC', this)">Centrales</button>
+                <button class="btn-filtro" onclick="filtrarJugadores('L', this)">Laterales</button>
+                <button class="btn-filtro" onclick="filtrarJugadores('MC', this)">Volantes</button>
+                <button class="btn-filtro" onclick="filtrarJugadores('DC', this)">Delanteros</button>
+            </div>
+        </div>
+        
+        <div id="plantel"></div>
+    </main>
+
+    <div class="popup" id="popup"><div class="popupContenido" id="detalle"></div></div>
+
+    <script>
+        const imgG = "https://cdn-icons-png.flaticon.com/512/166/166344.png";
+        
+        const entrenador = { nombre: "Paulo Autuori", posicion: "Director Técnico", nac: "BRA", edad: "67 años", foto: "https://img.sofascore.com/api/v1/manager/785403/image" };
+        
+        const jugadores = [
+            { nombre: "Felipe Vizeu", posicion: "DC", numero: "9", nac: "BRA", altura: "184 cm", fecNac: "12/03/1997", edad: "28 años", foto: "https://img.sofascore.com/api/v1/player/839635/image" },
+            { nombre: "Irven Ávila", posicion: "DC", numero: "11", nac: "PER", altura: "168 cm", fecNac: "02/07/1990", edad: "35 años", foto: "https://img.sofascore.com/api/v1/player/133862/image" },
+            { nombre: "Diego Otoya", posicion: "DC", numero: "28", nac: "PER", altura: "187 cm", fecNac: "13/09/2004", edad: "21 años", foto: "https://img.sofascore.com/api/v1/player/1464244/image" },
+            { nombre: "Mateo Rodríguez", posicion: "DC", numero: "97", nac: "PER", altura: "190 cm", fecNac: "04/08/2006", edad: "19 años", foto: "https://img.sofascore.com/api/v1/player/1482473/image" },
+            { nombre: "Jair Moretti", posicion: "DC", numero: "40", nac: "PER", altura: "181 cm", fecNac: "01/02/2007", edad: "19 años", foto: "https://img.sofascore.com/api/v1/player/1482472/image" },
+            { nombre: "Sebastian Sanchez", posicion: "DC", numero: "36", nac: "PER", altura: "171 cm", fecNac: "07/12/2005", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/2020027/image" },
+            { nombre: "Yoshimar Yotún", posicion: "MC", numero: "19", nac: "PER", altura: "171 cm", fecNac: "07/04/1990", edad: "35 años", foto: "https://img.sofascore.com/api/v1/player/46988/image" },
+            { nombre: "Maxloren Castro", posicion: "EI", numero: "23", nac: "PER", altura: "172 cm", fecNac: "08/12/2007", edad: "18 años", foto: "https://img.sofascore.com/api/v1/player/1650235/image" },
+            { nombre: "Gabriel", posicion: "MC, MCO", numero: "27", nac: "BRA", altura: "178 cm", fecNac: "06/01/1990", edad: "36 años", foto: "https://img.sofascore.com/api/v1/player/243459/image" },
+            { nombre: "Cristian Benavente", posicion: "MCO", numero: "14", nac: "PER", altura: "173 cm", fecNac: "19/05/1994", edad: "31 años", foto: "https://img.sofascore.com/api/v1/player/255997/image" },
+            { nombre: "Martín Távara", posicion: "MC, MCD", numero: "25", nac: "PER", altura: "181 cm", fecNac: "25/03/1999", edad: "26 años", foto: "https://img.sofascore.com/api/v1/player/874988/image" },
+            { nombre: "Santiago González", posicion: "ED", numero: "7", nac: "ARG", altura: "169 cm", fecNac: "25/07/1999", edad: "26 años", foto: "https://img.sofascore.com/api/v1/player/937859/image" },
+            { nombre: "Christofer Gonzáles", posicion: "MC, MCO", numero: "10", nac: "PER", altura: "176 cm", fecNac: "12/10/1992", edad: "33 años", foto: "https://img.sofascore.com/api/v1/player/345779/image" },
+            { nombre: "Catriel Cabellos", posicion: "MC", numero: "21", nac: "PER", altura: "172 cm", fecNac: "18/08/2004", edad: "21 años", foto: "https://img.sofascore.com/api/v1/player/1415942/image" },
+            { nombre: "Ian Wisdom", posicion: "MC", numero: "26", nac: "PER", altura: "169 cm", fecNac: "14/09/2005", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/1477138/image" },
+            { nombre: "Luis Iberico", posicion: "EI, DC", numero: "16", nac: "PER", altura: "177 cm", fecNac: "06/02/1998", edad: "28 años", foto: "https://img.sofascore.com/api/v1/player/901019/image" },
+            { nombre: "Gustavo Cazonatti", posicion: "MC, MCD", numero: "55", nac: "BRA", altura: "178 cm", fecNac: "03/07/1996", edad: "29 años", foto: "https://img.sofascore.com/api/v1/player/892073/image" },
+            { nombre: "Yamir Del Valle", posicion: "MC", numero: "34", nac: "PER", altura: "175 cm", fecNac: "13/02/2006", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/1483025/image" },
+            { nombre: "Gerson Castillo", posicion: "MC", numero: "44", nac: "PER", altura: "170 cm", fecNac: "24/07/2008", edad: "17 años", foto: "https://img.sofascore.com/api/v1/player/2020023/image" },
+            { nombre: "Josemaria Mellan Burga", posicion: "MC", numero: "42", nac: "PER", altura: "-", fecNac: "20/01/2007", edad: "19 años", foto: "https://img.sofascore.com/api/v1/player/2456730/image" },
+            { nombre: "Miguel Araujo", posicion: "DFC", numero: "20", nac: "PER", altura: "178 cm", fecNac: "24/10/1994", edad: "31 años", foto: "https://img.sofascore.com/api/v1/player/370226/image" },
+            { nombre: "Luis Abram", posicion: "DFC", numero: "96", nac: "PER", altura: "181 cm", fecNac: "27/02/1996", edad: "29 años", foto: "https://img.sofascore.com/api/v1/player/790031/image" },
+            { nombre: "Cristiano", posicion: "LI", numero: "90", nac: "BRA", altura: "178 cm", fecNac: "29/08/1993", edad: "32 años", foto: "https://img.sofascore.com/api/v1/player/886239/image" },
+            { nombre: "Leonardo Díaz", posicion: "LI", numero: "32", nac: "PER", altura: "184 cm", fecNac: "19/03/2004", edad: "21 años", foto: "https://img.sofascore.com/api/v1/player/1128897/image" },
+            { nombre: "Rafael Lutiger", posicion: "DFC, LI", numero: "5", nac: "PER", altura: "187 cm", fecNac: "03/07/2001", edad: "24 años", foto: "https://img.sofascore.com/api/v1/player/978549/image" },
+            { nombre: "Leandro Sosa", posicion: "LD, MC, ED", numero: "8", nac: "URU", altura: "176 cm", fecNac: "24/06/1994", edad: "31 años", foto: "https://img.sofascore.com/api/v1/player/828836/image" },
+            { nombre: "Juan Gonzalez", posicion: "LD", numero: "18", nac: "ARG", altura: "171 cm", fecNac: "02/12/1996", edad: "29 años", foto: "https://img.sofascore.com/api/v1/player/892451/image" },
+            { nombre: "Alejandro Pósito", posicion: "DFC", numero: "15", nac: "PER", altura: "183 cm", fecNac: "05/09/2005", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/1477144/image" },
+            { nombre: "Fabrizio Lora", posicion: "LD", numero: "37", nac: "PER", altura: "176 cm", fecNac: "30/08/2005", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/1502585/image" },
+            { nombre: "Fabian Lora", posicion: "DFC", numero: "37", nac: "PER", altura: "180 cm", fecNac: "30/08/2005", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/2040144/image" },
+            { nombre: "Joao Cuenca", posicion: "DFC", numero: "41", nac: "PER", altura: "163 cm", fecNac: "18/04/2007", edad: "18 años", foto: "https://img.sofascore.com/api/v1/player/1991592/image" },
+            { nombre: "Bahun Ballumbrosio", posicion: "LD", numero: "2", nac: "PER", altura: "-", fecNac: "-", edad: "-", foto: "https://img.sofascore.com/api/v1/player/2185492/image" },
+            { nombre: "Carlos Salgado", posicion: "LI", numero: "17", nac: "PER", altura: "180 cm", fecNac: "05/04/2008", edad: "17 años", foto: "https://img.sofascore.com/api/v1/player/2366559/image" },
+            { nombre: "Diego Enríquez", posicion: "ARQ", numero: "1", nac: "PER", altura: "185 cm", fecNac: "24/01/2002", edad: "24 años", foto: "https://img.sofascore.com/api/v1/player/978557/image" },
+            { nombre: "Renato Solís", posicion: "ARQ", numero: "12", nac: "PER", altura: "187 cm", fecNac: "28/01/1998", edad: "28 años", foto: "https://img.sofascore.com/api/v1/player/831791/image" },
+            { nombre: "César Bautista", posicion: "ARQ", numero: "33", nac: "PER", altura: "196 cm", fecNac: "16/01/2007", edad: "19 años", foto: "https://img.sofascore.com/api/v1/player/1865454/image" },
+            { nombre: "Tomás Dulanto", posicion: "ARQ", numero: "-", nac: "PER", altura: "182 cm", fecNac: "28/03/2008", edad: "17 años", foto: "https://img.sofascore.com/api/v1/player/2039323/image" },
+            { nombre: "Iván Spoljaric", posicion: "ARQ", numero: "-", nac: "PER", altura: "195 cm", fecNac: "06/02/2006", edad: "20 años", foto: "https://img.sofascore.com/api/v1/player/2454328/image" },
+            { nombre: "Edinson Sifuentes", posicion: "RES", numero: "-", nac: "PER", altura: "-", fecNac: "18/04/2007", edad: "18 años", foto: "https://img.sofascore.com/api/v1/player/2468694/image" },
+            { nombre: "Luis Baylón", posicion: "RES", numero: "-", nac: "PER", altura: "183 cm", fecNac: "07/04/2006", edad: "19 años", foto: "https://img.sofascore.com/api/v1/player/2468698/image" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const plantelDiv = document.getElementById("plantel");
+            if(plantelDiv) {
+                
+                let htmlCartas = `
+                    <div class="entrenador-wrapper" id="carta-dt">
+                        <div class="entrenador-card">
+                            <img src="${entrenador.foto}" alt="${entrenador.nombre}" class="entrenador-img" onerror="this.onerror=null; this.src='${imgG}';">
+                            <div class="entrenador-info">
+                                <h3>${entrenador.nombre}</h3>
+                                <p><i class="fa-solid fa-flag"></i> ${entrenador.nac} &nbsp;&nbsp; | &nbsp;&nbsp; <i class="fa-solid fa-cake-candles"></i> ${entrenador.edad}</p>
+                                <span class="badge-dt"><i class="fa-solid fa-clipboard-user"></i> ${entrenador.posicion}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                jugadores.forEach(j => {
+                    htmlCartas += `
+                        <div class="flip" data-pos="${j.posicion}">
+                            <div class="flip-inner">
+                                <div class="frente">
+                                    <img src="${j.foto}" alt="${j.nombre}" onerror="this.onerror=null; this.src='${imgG}';">
+                                    <div class="info-frente">
+                                        <h3>${j.nombre}</h3>
+                                        <small style="color: var(--sc-celeste); font-weight: bold;">${j.posicion}</small>
+                                    </div>
+                                </div>
+                                <div class="atras" onclick="abrirJugador('${j.nombre}','${j.posicion}','${j.numero}','${j.nac}','${j.altura}','${j.fecNac}','${j.edad}','${j.foto}')">
+                                    <div style="font-size:4rem; opacity:0.05; position:absolute; font-family: Oswald; font-weight:800;">${j.numero}</div>
+                                    <h3>${j.posicion}</h3>
+                                    <p style="font-size:0.85rem; font-weight:600;">Dorsal: #${j.numero}</p>
+                                    <button style="margin-top:15px; background:var(--sc-celeste); border:none; padding:8px 15px; border-radius:20px; font-weight:bold; cursor:pointer; color: #003366;"><i class="fa-solid fa-address-card"></i> Ver Ficha</button>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                plantelDiv.innerHTML = htmlCartas;
+            }
+        });
+
+        function filtrarJugadores(cat, btn) {
+            document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const dtCard = document.getElementById('carta-dt');
+            if (dtCard) {
+                dtCard.style.display = (cat === 'TODOS') ? 'flex' : 'none';
+            }
+
+            document.querySelectorAll('.flip').forEach(carta => {
+                const pos = carta.getAttribute('data-pos');
+                let coincidencia = false;
+
+                if (cat === 'TODOS') coincidencia = true;
+                else if (cat === 'ARQ' && pos.includes('ARQ')) coincidencia = true;
+                else if (cat === 'DFC' && pos.includes('DFC')) coincidencia = true;
+                else if (cat === 'L' && (pos.includes('LI') || pos.includes('LD'))) coincidencia = true;
+                else if (cat === 'MC' && (pos.includes('MC') || pos.includes('ED') || pos.includes('EI'))) coincidencia = true;
+                else if (cat === 'DC' && pos.split(',').some(p => p.trim() === 'DC')) coincidencia = true;
+
+                carta.style.display = coincidencia ? "block" : "none";
+            });
+        }
+
+        function abrirJugador(n,p,num,nac,alt,f,e,img){
+            document.getElementById("detalle").innerHTML = `
+                <div class="popup-header">
+                    <img src="${img}" alt="${n}" onerror="this.onerror=null; this.src='${imgG}';">
+                    <div>
+                        <h2>${n}</h2>
+                        <div class="num">#${num} | ${p}</div>
+                    </div>
+                </div>
+                <div class="player-details-grid">
+                    <div class="detail-item"><span>Nacionalidad</span><strong>${nac}</strong></div>
+                    <div class="detail-item"><span>Estatura</span><strong>${alt}</strong></div>
+                    <div class="detail-item"><span>F. Nacimiento</span><strong>${f}</strong></div>
+                    <div class="detail-item"><span>Edad</span><strong>${e}</strong></div>
+                </div>
+                <button onclick="document.getElementById('popup').style.display='none'" style="width:100%; padding:12px; background:var(--sc-celeste); color:var(--sc-dark-blue); border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:1rem; text-transform:uppercase;">Cerrar Ficha</button>
+            `;
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        window.onclick = function(event) {
+            const popup = document.getElementById("popup");
+            if (event.target === popup) popup.style.display = "none";
+        }
+    </script>
+</body>
+</html>
